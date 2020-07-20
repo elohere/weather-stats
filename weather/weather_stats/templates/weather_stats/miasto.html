@@ -1,0 +1,19 @@
+{% extends "weather_stats/base.html" %}
+
+{% block title %}
+    Miasto: {{city.name}}
+{% endblock %}
+
+{% block body %}
+    <h1>{{city.name}}</h1>
+
+    {% for post in weather %}
+       <ol>
+           {{post.date}}
+           <ul>
+            <li>temp: {{post.temp}}</li>
+            <li>temp minimalna: {{post.temp_min}}</li>
+           </ul>
+        </ol>
+    {% endfor %}
+{% endblock %}
