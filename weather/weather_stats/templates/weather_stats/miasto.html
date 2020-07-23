@@ -5,15 +5,43 @@
 {% endblock %}
 
 {% block body %}
+    <div style="float: left;">
     <h1>{{city.name}}</h1>
-
+    Średnia temperatura: {{srednia.temp__avg | floatformat}}&#8451;
+    Przeważnie będzie {{popularnosc.0}}
+    <br>
+    Najcieplej będzie {{srednia.temp__max}}&#8451; {{najcieplejszy.date}}
+    
+    
     {% for post in weather %}
-       <ol>
-           {{post.date}}
-           <ul>
-            <li>temp: {{post.temp}}</li>
-            <li>temp minimalna: {{post.temp_min}}</li>
-           </ul>
+       <ol>           
+           {{post.date}} : {{post.temp}}&#8451;, {{post.weather_desc}} <img src="http://openweathermap.org/img/wn/{{post.weather_icon}}.png" alt="icon">
         </ol>
     {% endfor %}
+    </div>
+     <style>
+        #map {
+          width: 400px;
+          height: 400px;
+          padding:20px;
+          background-color: grey;
+        }
+       </style>
+       <div id="map"></div>
+       <script>
+   // Initialize and add the map
+   function initMap() {
+     // The location of Uluru
+     var uluru = {lat: {{city.coordlat}}, lng: {{city.coordlon}}};
+     // The map, centered at Uluru
+     var map = new google.maps.Map(
+         document.getElementById('map'), {zoom: 4, center: uluru});
+     // The marker, positioned at Uluru
+     var marker = new google.maps.Marker({position: uluru, map: map});
+   }
+       </script>
+       <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBK0UaZK51LaNzFXaf1u_6rfqVWFGiR_lE&callback=initMap">
+       </script>  
+    </div>
 {% endblock %}

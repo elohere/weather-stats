@@ -1,16 +1,19 @@
 from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 import requests
 from weather_stats.models import City, Weather
 # Create your views here.
-def sendRequest(request):
-    res = requests.get("https://api.openweathermap.org/data/2.5/forecast?q=Łabiszyn&appid=50e6d49e940dd59765f1a0a6f19e7e4b")
+def sendRequest(request, miasto):
+    link="https://api.openweathermap.org/data/2.5/forecast?appid=50e6d49e940dd59765f1a0a6f19e7e4b&units=metric&lang=pl&q="
+    link += miasto
+    res = requests.get(link)
     data = res.json()
     return data
 
 def importdataapi(request):
-    data = sendRequest(request)
+    miasto = request.POST.get('wpisane_miasto')
+    data = sendRequest(request, miasto)
     cityapi = data['city']
     weatherlist = data['list']
     cityajdi = cityapi['id']
@@ -23,7 +26,9 @@ def importdataapi(request):
         a.coordlat = cityapi['coord']['lat']
         a.coordlon = cityapi['coord']['lon']
         a.save()
+        city = City.objects.get(cityid=cityajdi)
     finally:
+        Weather.objects.filter(city=city).delete()
         for w in weatherlist:
             b = Weather()
             b.city = City.objects.get(cityid=cityajdi)
@@ -37,3 +42,4 @@ def importdataapi(request):
             b.weather_desc = w['weather'][0]['description']
             b.weather_icon =w['weather'][0]['icon']
             b.save()
+    return redirect('/', foo='bar')

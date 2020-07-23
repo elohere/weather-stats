@@ -5,13 +5,23 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Miasta s</h1>
+    <h1>Miasta</h1>
 
     {% for post in City %}
         <li>
             <a href="{{post.id}}">
                 {{post.name}} [{{post.cityid}}] ({{post.coordlon}}, {{post.coordlat}})
             </a>
+            <a href="/del/{{post.id}}">&#10006;</a>
         </li>
+        
     {% endfor %}
+     <hr>
+    <form action="{%url 'importapi:importdataapi' %}" method="POST">
+    {% csrf_token %} 
+    <label>Nazwa miasta:</label>
+    <input type="text" id="wpisane_miasto" name="wpisane_miasto">
+    <input type="submit" value="Dodaj miasto">
+    </form>
+    
 {% endblock %}

@@ -1,0 +1,22 @@
+html, body{
+    background: #50514F;
+    color:#383838
+}
+.wrapper{
+    margin:0 auto;
+    max-width: 966px;
+    padding:3px;
+    display:inline-block;
+    background:#247BA0;
+    color:#FFFCFF;
+    border-radius: 10px;
+    text-align:center;
+}
+.wrapper a{
+    color:#FFFCFF;
+}
+.box{
+    margin:0;
+    display:block;
+    float:left;
+}
