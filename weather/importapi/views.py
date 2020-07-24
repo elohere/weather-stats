@@ -14,6 +14,8 @@ def sendRequest(request, miasto):
 def importdataapi(request):
     miasto = request.POST.get('wpisane_miasto')
     data = sendRequest(request, miasto)
+    if data['cod'] != "200":
+        return redirect('/', foo='bar')
     cityapi = data['city']
     weatherlist = data['list']
     cityajdi = cityapi['id']

@@ -3,7 +3,6 @@
 {% block title %}
     Miasta
 {% endblock %}
-
 {% block body %}
     <h1>Miasta</h1>
 
@@ -18,7 +17,7 @@
     {% endfor %}
      <hr>
     <form action="{%url 'importapi:importdataapi' %}" method="POST">
-    {% csrf_token %} 
+    {% csrf_token %}
     <label>Nazwa miasta:</label>
     <input type="text" id="wpisane_miasto" name="wpisane_miasto">
     <input type="submit" value="Dodaj miasto">
